@@ -1,1 +1,1 @@
-# Lab2-MCU
+# Lab2-MCU Ex1
