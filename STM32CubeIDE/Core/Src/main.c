@@ -105,7 +105,7 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  /*Ex2*/
+  /*Ex3*/
   setTimer1(100);
   setTimer2(50);
   int status = 1;
