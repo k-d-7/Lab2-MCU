@@ -109,52 +109,63 @@ int main(void)
   /*Ex3*/
   setTimer1(100);
   setTimer2(50);
-  int status = 1;
+  const int MAX_LED = 4;
+  int index_led = 0;
+  //int status = 1;
   while (1)
   {
 	if (timer1_flag == 1) {
 		setTimer1(100);
 		HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
+		HAL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);
 	}
+
 	if (timer2_flag == 1) {
 		setTimer2(50);
-		switch (status) {
-			case 1:
-				HAL_GPIO_WritePin(EN0_GPIO_Port, EN0_Pin, 0);
-				HAL_GPIO_WritePin(EN1_GPIO_Port, EN1_Pin, 1);
-				HAL_GPIO_WritePin(EN2_GPIO_Port, EN2_Pin, 1);
-				HAL_GPIO_WritePin(EN3_GPIO_Port, EN3_Pin, 1);
-				display7SEG(1);
-				status = 2;
-				break;
-			case 2:
-				HAL_GPIO_WritePin(EN0_GPIO_Port, EN0_Pin, 1);
-				HAL_GPIO_WritePin(EN1_GPIO_Port, EN1_Pin, 0);
-				HAL_GPIO_WritePin(EN2_GPIO_Port, EN2_Pin, 1);
-				HAL_GPIO_WritePin(EN3_GPIO_Port, EN3_Pin, 1);
-				display7SEG(2);
-				status = 3;
-				break;
-			case 3:
-				HAL_GPIO_WritePin(EN0_GPIO_Port, EN0_Pin, 1);
-				HAL_GPIO_WritePin(EN1_GPIO_Port, EN1_Pin, 1);
-				HAL_GPIO_WritePin(EN2_GPIO_Port, EN2_Pin, 0);
-				HAL_GPIO_WritePin(EN3_GPIO_Port, EN3_Pin, 1);
-				display7SEG(3);
-				status = 4;
-				break;
-			case 4:
-				HAL_GPIO_WritePin(EN0_GPIO_Port, EN0_Pin, 1);
-				HAL_GPIO_WritePin(EN1_GPIO_Port, EN1_Pin, 1);
-				HAL_GPIO_WritePin(EN2_GPIO_Port, EN2_Pin, 1);
-				HAL_GPIO_WritePin(EN3_GPIO_Port, EN3_Pin, 0);
-				display7SEG(0);
-				status = 1;
-				break;
-			default:
-				break;
+		update7SEG(index_led++);
+		if (index_led >= MAX_LED) {
+			index_led = 0;
 		}
 	}
+//	if (timer2_flag == 1) {
+//		setTimer2(50);
+//		switch (status) {
+//			case 1:
+//				HAL_GPIO_WritePin(EN0_GPIO_Port, EN0_Pin, 0);
+//				HAL_GPIO_WritePin(EN1_GPIO_Port, EN1_Pin, 1);
+//				HAL_GPIO_WritePin(EN2_GPIO_Port, EN2_Pin, 1);
+//				HAL_GPIO_WritePin(EN3_GPIO_Port, EN3_Pin, 1);
+//				display7SEG(1);
+//				status = 2;
+//				break;
+//			case 2:
+//				HAL_GPIO_WritePin(EN0_GPIO_Port, EN0_Pin, 1);
+//				HAL_GPIO_WritePin(EN1_GPIO_Port, EN1_Pin, 0);
+//				HAL_GPIO_WritePin(EN2_GPIO_Port, EN2_Pin, 1);
+//				HAL_GPIO_WritePin(EN3_GPIO_Port, EN3_Pin, 1);
+//				display7SEG(2);
+//				status = 3;
+//				break;
+//			case 3:
+//				HAL_GPIO_WritePin(EN0_GPIO_Port, EN0_Pin, 1);
+//				HAL_GPIO_WritePin(EN1_GPIO_Port, EN1_Pin, 1);
+//				HAL_GPIO_WritePin(EN2_GPIO_Port, EN2_Pin, 0);
+//				HAL_GPIO_WritePin(EN3_GPIO_Port, EN3_Pin, 1);
+//				display7SEG(3);
+//				status = 4;
+//				break;
+//			case 4:
+//				HAL_GPIO_WritePin(EN0_GPIO_Port, EN0_Pin, 1);
+//				HAL_GPIO_WritePin(EN1_GPIO_Port, EN1_Pin, 1);
+//				HAL_GPIO_WritePin(EN2_GPIO_Port, EN2_Pin, 1);
+//				HAL_GPIO_WritePin(EN3_GPIO_Port, EN3_Pin, 0);
+//				display7SEG(0);
+//				status = 1;
+//				break;
+//			default:
+//				break;
+//		}
+//	}
 
     /* USER CODE END WHILE */
 
@@ -296,22 +307,37 @@ void display7SEG(int num) {
 	HAL_GPIO_WritePin(g_GPIO_Port, g_Pin, (segNumber[num]>>6) & 0x01);
 }
 
-const int MAX_LED = 4;
-int index_led = 0;
+
 int led_buffer[4] = {1, 2, 3, 4};
 void update7SEG(int index) {
 	switch (index) {
 		case 0:
-
+			HAL_GPIO_WritePin(EN0_GPIO_Port, EN0_Pin, 0);
+			HAL_GPIO_WritePin(EN1_GPIO_Port, EN1_Pin, 1);
+			HAL_GPIO_WritePin(EN2_GPIO_Port, EN2_Pin, 1);
+			HAL_GPIO_WritePin(EN3_GPIO_Port, EN3_Pin, 1);
+			display7SEG(led_buffer[index]);
 			break;
 		case 1:
-
+			HAL_GPIO_WritePin(EN0_GPIO_Port, EN0_Pin, 1);
+			HAL_GPIO_WritePin(EN1_GPIO_Port, EN1_Pin, 0);
+			HAL_GPIO_WritePin(EN2_GPIO_Port, EN2_Pin, 1);
+			HAL_GPIO_WritePin(EN3_GPIO_Port, EN3_Pin, 1);
+			display7SEG(led_buffer[index]);
 			break;
 		case 2:
-
+			HAL_GPIO_WritePin(EN0_GPIO_Port, EN0_Pin, 1);
+			HAL_GPIO_WritePin(EN1_GPIO_Port, EN1_Pin, 1);
+			HAL_GPIO_WritePin(EN2_GPIO_Port, EN2_Pin, 0);
+			HAL_GPIO_WritePin(EN3_GPIO_Port, EN3_Pin, 1);
+			display7SEG(led_buffer[index]);
 			break;
 		case 3:
-
+			HAL_GPIO_WritePin(EN0_GPIO_Port, EN0_Pin, 1);
+			HAL_GPIO_WritePin(EN1_GPIO_Port, EN1_Pin, 1);
+			HAL_GPIO_WritePin(EN2_GPIO_Port, EN2_Pin, 1);
+			HAL_GPIO_WritePin(EN3_GPIO_Port, EN3_Pin, 0);
+			display7SEG(led_buffer[index]);
 			break;
 		default:
 			break;
