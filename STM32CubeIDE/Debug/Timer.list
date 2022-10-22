@@ -117,12 +117,12 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  /*Ex3*/
+  /*Ex4*/
   setTimer1(100);
  8000168:	2064      	movs	r0, #100	; 0x64
  800016a:	f000 fa21 	bl	80005b0 <setTimer1>
-  setTimer2(50);
- 800016e:	2032      	movs	r0, #50	; 0x32
+  setTimer2(25);
+ 800016e:	2019      	movs	r0, #25
  8000170:	f000 fa32 	bl	80005d8 <setTimer2>
   const int MAX_LED = 4;
  8000174:	2304      	movs	r3, #4
@@ -156,8 +156,8 @@ int main(void)
  800019c:	681b      	ldr	r3, [r3, #0]
  800019e:	2b01      	cmp	r3, #1
  80001a0:	d1ec      	bne.n	800017c <main+0x30>
-		setTimer2(50);
- 80001a2:	2032      	movs	r0, #50	; 0x32
+		setTimer2(25);
+ 80001a2:	2019      	movs	r0, #25
  80001a4:	f000 fa18 	bl	80005d8 <setTimer2>
 		update7SEG(index_led++);
  80001a8:	687b      	ldr	r3, [r7, #4]

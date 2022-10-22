@@ -108,7 +108,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   /*Ex4*/
   setTimer1(100);
-  setTimer2(50);
+  setTimer2(25);
   const int MAX_LED = 4;
   int index_led = 0;
   //int status = 1;
@@ -121,7 +121,7 @@ int main(void)
 	}
 
 	if (timer2_flag == 1) {
-		setTimer2(50);
+		setTimer2(25);
 		update7SEG(index_led++);
 		if (index_led >= MAX_LED) {
 			index_led = 0;
