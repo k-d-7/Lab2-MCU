@@ -106,7 +106,7 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  /*Ex4*/
+  /*Ex5*/
   setTimer1(100);
   setTimer2(25);
   const int MAX_LED = 4;
