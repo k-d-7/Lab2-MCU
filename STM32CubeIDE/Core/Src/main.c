@@ -110,7 +110,7 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  /*Ex5*/
+  /*Ex9*/
   setTimer1(100);
   setTimer2(25);
   setTimer3(100);
