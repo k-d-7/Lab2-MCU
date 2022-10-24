@@ -125,7 +125,7 @@ int main(void)
 		HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
 		HAL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);
 	}
-//
+
 //	if (timer3_flag == 1) {
 //		setTimer3(100);
 //		second++;
@@ -143,15 +143,15 @@ int main(void)
 //		updateClockBuffer(hour, minute);
 //	}
 //
-//	if (timer2_flag == 1) {
-//		setTimer2(25);
-//		update7SEG(index_led++);
-//		if (index_led >= MAX_LED) {
-//			index_led = 0;
-//		}
-//	}
+	if (timer2_flag == 1) {
+		setTimer2(25);
+		update7SEG(index_led++);
+		if (index_led >= MAX_LED) {
+			index_led = 0;
+		}
+	}
 	HAL_GPIO_WritePin(ENM0_GPIO_Port, ENM0_Pin, 1);
-	HAL_GPIO_WritePin(ROW0_GPIO_Port, ROW0_Pin, 0);
+	HAL_GPIO_WritePin(ROW0_GPIO_Port, ROW0_Pin, 1);
 
 
 
