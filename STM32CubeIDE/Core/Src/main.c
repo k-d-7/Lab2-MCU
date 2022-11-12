@@ -115,17 +115,19 @@ int main(void)
   setTimer1(100);
   setTimer2(25);
   setTimer3(100);
+  setTimer4(10);
 //  int hour = 15;
 //  int minute = 59;
 //  int second = 50;
+  int index = 0;
   while (1)
   {
-	if (timer1_flag == 1) {
-		setTimer1(100);
-		HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
-		HAL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);
-	}
-
+//	if (timer1_flag == 1) {
+//		setTimer1(100);
+//		HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
+//		HAL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);
+//	}
+//
 //	if (timer3_flag == 1) {
 //		setTimer3(100);
 //		second++;
@@ -143,16 +145,22 @@ int main(void)
 //		updateClockBuffer(hour, minute);
 //	}
 //
-	if (timer2_flag == 1) {
-		setTimer2(25);
-		update7SEG(index_led++);
-		if (index_led >= MAX_LED) {
-			index_led = 0;
+//	if (timer2_flag == 1) {
+//		setTimer2(25);
+//		update7SEG(index_led++);
+//		if (index_led >= MAX_LED) {
+//			index_led = 0;
+//		}
+//	}
+
+	if (timer4_flag == 1)  {
+		setTimer4(10);
+		updateLEDMatrix(index);
+		index++;
+		if (index > 7) {
+			index = 0;
 		}
 	}
-	HAL_GPIO_WritePin(ENM0_GPIO_Port, ENM0_Pin, 1);
-	HAL_GPIO_WritePin(ROW0_GPIO_Port, ROW0_Pin, 1);
-
 
 
     /* USER CODE END WHILE */
@@ -349,8 +357,27 @@ void updateClockBuffer(int hour, int minute) {
 	led_buffer[3] = minute % 10;
 }
 
-void updateLEDMatrix(int index) {
+uint8_t row_buffer[8] = {0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80};
+uint8_t col_buffer[8] = {0x18, 0x3c, 0x66, 0x66, 0x7e, 0x7e, 0x66, 0x66};
 
+void updateLEDMatrix(int index) {
+	HAL_GPIO_WritePin(ENM0_GPIO_Port, ENM0_Pin, (col_buffer[index] >> 0) & 0x01);
+	HAL_GPIO_WritePin(ENM1_GPIO_Port, ENM1_Pin, (col_buffer[index] >> 1) & 0x01);
+	HAL_GPIO_WritePin(ENM2_GPIO_Port, ENM2_Pin, (col_buffer[index] >> 2) & 0x01);
+	HAL_GPIO_WritePin(ENM3_GPIO_Port, ENM3_Pin, (col_buffer[index] >> 3) & 0x01);
+	HAL_GPIO_WritePin(ENM4_GPIO_Port, ENM4_Pin, (col_buffer[index] >> 4) & 0x01);
+	HAL_GPIO_WritePin(ENM5_GPIO_Port, ENM5_Pin, (col_buffer[index] >> 5) & 0x01);
+	HAL_GPIO_WritePin(ENM6_GPIO_Port, ENM6_Pin, (col_buffer[index] >> 6) & 0x01);
+	HAL_GPIO_WritePin(ENM7_GPIO_Port, ENM7_Pin, (col_buffer[index] >> 7) & 0x01);
+
+	HAL_GPIO_WritePin(ROW0_GPIO_Port, ROW0_Pin, (row_buffer[index] >> 0) & 0x01);
+	HAL_GPIO_WritePin(ROW1_GPIO_Port, ROW1_Pin, (row_buffer[index] >> 1) & 0x01);
+	HAL_GPIO_WritePin(ROW2_GPIO_Port, ROW2_Pin, (row_buffer[index] >> 2) & 0x01);
+	HAL_GPIO_WritePin(ROW3_GPIO_Port, ROW3_Pin, (row_buffer[index] >> 3) & 0x01);
+	HAL_GPIO_WritePin(ROW4_GPIO_Port, ROW4_Pin, (row_buffer[index] >> 4) & 0x01);
+	HAL_GPIO_WritePin(ROW5_GPIO_Port, ROW5_Pin, (row_buffer[index] >> 5) & 0x01);
+	HAL_GPIO_WritePin(ROW6_GPIO_Port, ROW6_Pin, (row_buffer[index] >> 6) & 0x01);
+	HAL_GPIO_WritePin(ROW7_GPIO_Port, ROW7_Pin, (row_buffer[index] >> 7) & 0x01);
 }
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim)
