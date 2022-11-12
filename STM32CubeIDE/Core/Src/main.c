@@ -54,7 +54,8 @@ static void MX_GPIO_Init(void);
 void display7SEG(int);
 void update7SEG(int);
 void updateClockBuffer(int, int);
-void updateLEDMatrix(int);
+void updateCOLMatrix(int);
+void updateROWMatrix(int);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -155,7 +156,8 @@ int main(void)
 
 	if (timer4_flag == 1)  {
 		setTimer4(10);
-		updateLEDMatrix(index);
+		updateROWMatrix(index);
+		updateCOLMatrix(index);
 		index++;
 		if (index > 7) {
 			index = 0;
@@ -360,7 +362,7 @@ void updateClockBuffer(int hour, int minute) {
 uint8_t row_buffer[8] = {0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80};
 uint8_t col_buffer[8] = {0x18, 0x3c, 0x66, 0x66, 0x7e, 0x7e, 0x66, 0x66};
 
-void updateLEDMatrix(int index) {
+void updateCOLMatrix(int index) {
 	HAL_GPIO_WritePin(ENM0_GPIO_Port, ENM0_Pin, (col_buffer[index] >> 0) & 0x01);
 	HAL_GPIO_WritePin(ENM1_GPIO_Port, ENM1_Pin, (col_buffer[index] >> 1) & 0x01);
 	HAL_GPIO_WritePin(ENM2_GPIO_Port, ENM2_Pin, (col_buffer[index] >> 2) & 0x01);
@@ -369,6 +371,10 @@ void updateLEDMatrix(int index) {
 	HAL_GPIO_WritePin(ENM5_GPIO_Port, ENM5_Pin, (col_buffer[index] >> 5) & 0x01);
 	HAL_GPIO_WritePin(ENM6_GPIO_Port, ENM6_Pin, (col_buffer[index] >> 6) & 0x01);
 	HAL_GPIO_WritePin(ENM7_GPIO_Port, ENM7_Pin, (col_buffer[index] >> 7) & 0x01);
+
+}
+
+void updateROWMatrix(int index) {
 
 	HAL_GPIO_WritePin(ROW0_GPIO_Port, ROW0_Pin, (row_buffer[index] >> 0) & 0x01);
 	HAL_GPIO_WritePin(ROW1_GPIO_Port, ROW1_Pin, (row_buffer[index] >> 1) & 0x01);
