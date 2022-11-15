@@ -117,43 +117,43 @@ int main(void)
   setTimer2(25);
   setTimer3(100);
   setTimer4(10);
-//  int hour = 15;
-//  int minute = 59;
-//  int second = 50;
+  int hour = 15;
+  int minute = 59;
+  int second = 50;
   int index = 0;
   int current = 0;
   while (1)
   {
-//	if (timer1_flag == 1) {
-//		setTimer1(100);
-//		HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
-//		HAL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);
-//	}
-//
-//	if (timer3_flag == 1) {
-//		setTimer3(100);
-//		second++;
-//		if (second >= 60) {
-//			second = 0;
-//			minute++;
-//		}
-//		if (minute >= 60) {
-//			minute = 0;
-//			hour++;
-//		}
-//		if (hour >= 24) {
-//			hour = 0;
-//		}
-//		updateClockBuffer(hour, minute);
-//	}
-//
-//	if (timer2_flag == 1) {
-//		setTimer2(25);
-//		update7SEG(index_led++);
-//		if (index_led >= MAX_LED) {
-//			index_led = 0;
-//		}
-//	}
+	if (timer1_flag == 1) {
+		setTimer1(100);
+		HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
+		HAL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);
+	}
+
+	if (timer3_flag == 1) {
+		setTimer3(100);
+		second++;
+		if (second >= 60) {
+			second = 0;
+			minute++;
+		}
+		if (minute >= 60) {
+			minute = 0;
+			hour++;
+		}
+		if (hour >= 24) {
+			hour = 0;
+		}
+		updateClockBuffer(hour, minute);
+	}
+
+	if (timer2_flag == 1) {
+		setTimer2(25);
+		update7SEG(index_led++);
+		if (index_led >= MAX_LED) {
+			index_led = 0;
+		}
+	}
 
 	if (timer4_flag == 1)  {
 		setTimer4(10);
